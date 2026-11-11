@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "expressir"
+version = "0.1.0"
+description = "Python runtime for Expressir: schema parse, remark attach, format, check, and the Part 21 population through the expressir-rs C ABI"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Compilers",
+  "Topic :: Text Processing :: General",
+]
+
+[project.urls]
+Homepage = "https://expressir.org"
+Repository = "https://github.com/lutaml/expressir-python"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+expressir = ["lib/*.so", "lib/*.dylib", "lib/*.dll", "assets/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

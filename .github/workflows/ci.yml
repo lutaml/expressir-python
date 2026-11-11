@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, macos-14]
+        python: ['3.9', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Build the C-ABI cdylib
+        run: cargo build --release
+        working-directory: expressir-rs
+      - name: Install
+        run: python3 -m pip install -e . pytest
+      - name: Test
+        run: python3 -m pytest tests -q
+        env:
+          EXPRESSIR_CDYLIB: ${{ github.workspace }}/expressir-rs/target/release/libexpressir_rs${{ matrix.os == 'macos-14' && '.dylib' || '.so' }}
