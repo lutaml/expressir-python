@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macos-14]
+        os: [ubuntu-22.04, macos-15]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,7 +36,7 @@ jobs:
       - name: Vendor the cdylib into the package
         run: |
           mkdir -p src/expressir/lib
-          cp expressir-rs/target/release/libexpressir${{ matrix.os == 'macos-14' && '.dylib' || '.so' }} src/expressir/lib/
+          cp expressir-rs/target/release/libexpressir${{ matrix.os == 'macos-15' && '.dylib' || '.so' }} src/expressir/lib/
       - name: Stamp the requested version
         run: |
           python3 - <<'PY'
