@@ -36,7 +36,7 @@ jobs:
       - name: Vendor the cdylib into the package
         run: |
           mkdir -p src/expressir/lib
-          cp expressir-rs/target/release/libexpressir_rs${{ matrix.os == 'macos-14' && '.dylib' || '.so' }} src/expressir/lib/
+          cp expressir-rs/target/release/libexpressir${{ matrix.os == 'macos-14' && '.dylib' || '.so' }} src/expressir/lib/
       - name: Stamp the requested version
         run: |
           python3 - <<'PY'
