@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "expressir"
-version = "0.1.0"
+version = "2.4.69"
 description = "Python runtime for Expressir: schema parse, remark attach, format, check, and the Part 21 population through the expressir-rs C ABI"
 readme = "README.md"
 license = { text = "MIT" }
