@@ -32,4 +32,4 @@ jobs:
       - name: Test
         run: python3 -m pytest tests -q
         env:
-          EXPRESSIR_CDYLIB: ${{ github.workspace }}/expressir-rs/target/release/libexpressir_rs${{ matrix.os == 'macos-14' && '.dylib' || '.so' }}
+          EXPRESSIR_CDYLIB: ${{ github.workspace }}/expressir-rs/target/release/libexpressir${{ matrix.os == 'macos-14' && '.dylib' || '.so' }}

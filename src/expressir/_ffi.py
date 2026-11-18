@@ -13,10 +13,10 @@ import os
 from pathlib import Path
 
 _LIB_NAMES = (
-    "libexpressir_rs.dylib",
-    "libexpressir_rs.so",
-    "expressir_rs.dll",  # cargo emits no lib prefix on windows
-    "libexpressir_rs.dll",
+    "libexpressir.dylib",
+    "libexpressir.so",
+    "expressir.dll",  # cargo emits no lib prefix on windows
+    "libexpressir.dll",
 )
 
 
@@ -61,7 +61,7 @@ def load() -> ctypes.CDLL:
             errors.append(f"{candidate}: {error}")
     if lib is None:
         raise ExpressirError(
-            "libexpressir_rs not found (build it with `cargo build --release` "
+            "libexpressir not found (build it with `cargo build --release` "
             "in expressir-rs and point EXPRESSIR_CDYLIB at the dylib, or "
             "install a wheel that vendors it). Tried:\n  " + "\n  ".join(errors)
         )
