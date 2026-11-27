@@ -9,8 +9,10 @@ from ._ffi import ExpressirError, ParseFailed, engine_version, load
 from .api import (
     attach_remarks,
     check,
+    flatten_schema,
     format,
     parse_population,
+    parse_population_recovering,
     parse_schema,
     validate_population,
 )
@@ -28,9 +30,11 @@ __all__ = [
     "attach_remarks",
     "check",
     "engine_version",
+    "flatten_schema",
     "format",
     "load",
     "parse_population",
+    "parse_population_recovering",
     "parse_schema",
     "validate_population",
     "__version__",
