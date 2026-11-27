@@ -83,6 +83,9 @@ def load() -> ctypes.CDLL:
         ("expr_check", 2),
         ("expr_parse_population", 1),
         ("expr_validate_population", 2),
+        ("expr_concat_schema", 2),
+        ("expr_flatten_schema", 3),
+        ("expr_parse_population_recovering", 1),
     ):
         fn = getattr(lib, name)
         fn.argtypes = [c_char_p] * arity
