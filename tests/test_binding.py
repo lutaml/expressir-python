@@ -83,3 +83,43 @@ def test_validate_population_verdict():
 def test_parse_failure_raises_with_the_last_error():
     with pytest.raises(ExpressirError):
         expressir.parse_schema("not express at all")
+
+
+def test_flatten_schema_runs_the_longform():
+    repo_wire = {
+        "schemas": [
+            {
+                "id": "mim",
+                "file": "/x/mim.exp",
+                "interfaces": [
+                    {
+                        "_class": "Expressir::Model::Declarations::Interface",
+                        "kind": "USE",
+                        "schema": {
+                            "_class": "Expressir::Model::References::SimpleReference",
+                            "id": "arm",
+                        },
+                    }
+                ],
+            },
+            {"id": "arm", "file": "/x/arm.exp", "interfaces": []},
+        ]
+    }
+    longform = expressir.flatten_schema(repo_wire, "mim", "mim_long")
+    parsed = json.loads(longform)
+    assert parsed["id"] == "mim_long"
+
+
+def test_parse_population_recovering_envelope():
+    ok = expressir.parse_population_recovering(POPULATION)
+    assert ok["ok"] is True
+    assert ok["population"]["records"][0]["keyword"] == "E"
+
+    junked = POPULATION.replace(
+        "ENDSEC;\nEND-ISO-10303-21;",
+        "\n#9999=JUNK(%%%);\nENDSEC;\nEND-ISO-10303-21;",
+    )
+    bad = expressir.parse_population_recovering(junked)
+    assert bad["ok"] is False
+    assert bad["error"]["offset"] >= 0
+    assert bad["consumed_upto"] == bad["error"]["offset"]
