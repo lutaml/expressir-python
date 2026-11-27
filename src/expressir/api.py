@@ -48,8 +48,28 @@ __all__ = [
     "attach_remarks",
     "check",
     "engine_version",
+    "flatten_schema",
     "format",
     "parse_population",
+    "parse_population_recovering",
     "parse_schema",
     "validate_population",
 ]
+
+
+def flatten_schema(repository_wire: dict | str, root_id: str, longform_name: str) -> str:
+    """Runs the SHTOLO longform over a resolved repository wire (#636).
+
+    The full stage order returns the longform schema wire JSON.
+    """
+    wire_json = repository_wire if isinstance(repository_wire, str) else json.dumps(repository_wire)
+    return call(load().expr_flatten_schema, wire_json, root_id, longform_name)
+
+
+def parse_population_recovering(source: str) -> dict:
+    """Parses an ISO-10303-21 population through the recovery envelope (#627).
+
+    The population inventory on well-formed input; the failure
+    forensics on malformed input.
+    """
+    return json.loads(call(load().expr_parse_population_recovering, source))
